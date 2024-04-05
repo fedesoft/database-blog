@@ -1,0 +1,19 @@
+
+services:
+  postgres:
+    image: fedesoft/blog-database
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "5433:5432"
+    environment:
+      POSTGRES_USER: ublogdb
+      POSTGRES_PASSWORD: mystrongpassword
+      POSTGRES_DB: blogdb
+    volumes:
+      - postgres-blog-data:/var/lib/postgresql/data
+
+volumes:
+  postgres-blog-data:
+    driver: local

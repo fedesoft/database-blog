@@ -1,0 +1,27 @@
+CREATE TABLE IF NOT EXISTS "posts" (
+    id BIGSERIAL PRIMARY KEY,
+    author VARCHAR(100),
+
+    title VARCHAR(255),
+    image VARCHAR(255),
+    post TEXT,
+
+    created TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    modified TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    is_draft BOOLEAN DEFAULT TRUE,
+    url VARCHAR(255) UNIQUE,
+    slug VARCHAR(255) UNIQUE,
+    views INTEGER DEFAULT 0
+);
+
+CREATE TABLE IF NOT EXISTS "categories" (
+    id BIGSERIAL PRIMARY KEY,
+    name VARCHAR(100) UNIQUE,
+    slug VARCHAR(100) UNIQUE
+);
+
+CREATE TABLE IF NOT EXISTS "posts_categories" (
+    post_id BIGINT REFERENCES "posts" (id) ON DELETE CASCADE,
+    category_id BIGINT REFERENCES "categories" (id) ON DELETE CASCADE,
+    PRIMARY KEY (post_id, category_id)
+);
